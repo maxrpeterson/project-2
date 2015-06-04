@@ -1,6 +1,7 @@
 require "sinatra/base"
 require "sinatra/reloader"
 require "pry"
+require "redcarpet"
 require_relative "models/users"
 require_relative "models/posts"
 require_relative "models/comments"
@@ -9,25 +10,33 @@ module Forum
 	class Server < Sinatra::Base
 		configure do
 			register Sinatra::Reloader
+      set :sessions, true
 		end
+
+		$markdown = Redcarpet::Render::HTML.new(filter_html: true, safe_links_only: true)
 
 		# Homepage
 		get '/' do
+			@session_id = session[:user_id] unless session[:user_id].nil?
+			@posts = Post.get_all
 			erb :index
 		end
 
 		# sign in/sign up
 		post '/login' do
 			result = User.login(params[:email], params[:password])
-			binding.pry
 			if result.nil?
 				@message = "Incorrect username or password"
 				erb :index
 			else
 				session[:user_id] = result
-				@session_id = session[:user_id]
-				erb :index
+				redirect '/'
 			end
+		end
+
+		delete '/login' do
+			session[:user_id] = nil
+			redirect '/'
 		end
 
 		# USERS
@@ -44,12 +53,23 @@ module Forum
 			erb :new_post
 		end
 
-		post '/posts' do
-			if session[:user_id]
+		get '/posts/:id' do
+			@post = Post.find_by_id(params[:id])
+			# @post.body = $markdown.render(@post.body)
+			erb :post
+		end
 
-				@post = Post.new(params)
+		post '/posts' do
+
+			if session[:user_id].nil?
+				status 403
+				"Unauthorized, please log in."
+			else
+				#make post
+				post = Post.new "user_id" => session[:user_id], "title" => params[:title], "body" => params[:body]
+				@post_id = post.save_new
+				redirect "/posts/#{@post_id}"
 			end
-			# erb :post
 		end
 
 	end

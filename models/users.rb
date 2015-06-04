@@ -11,8 +11,7 @@ class User
 		@created = params["created"]
 	end
 
-	attr_reader :id
-	attr_accessor :fname, :lname, :gender, :email
+	attr_reader :id, :fname, :lname, :gender, :email
 	attr_writer :password
 
 	def self.find_by_id(id)
@@ -32,6 +31,14 @@ class User
 	def self.find_by_email(email)
 		result = $db.exec_params("SELECT * FROM users WHERE email=$1", [email]).first
 		User.new(result)
+	end
+
+	def full_name
+		if @lname.nil?
+			@fname
+		else
+			"#{@fname} #{@lname}"
+		end
 	end
 
 	def save

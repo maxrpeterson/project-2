@@ -8,9 +8,23 @@
 </head>
 <body>
 	<header>
+		<big>Jake's Forum</big>
+		<div id="login">
+			<form method="POST" action="/login">
+				<input type="text" name="email" placeholder="Email">
+				<input type="password" name="password" placeholder="Password">
+				<input type="submit" value="Log In">
+			</form>
+			<form method="POST" action="/login">
+				<input type="hidden" name="_method" value="DELETE">
+				<input type="submit" value="Log Out">
+			</form>
+		</div>
 	</header>
+	<div class="container">
 
 	<%= yield %>
-	
+
+	</div>	
 </body>
 </html>

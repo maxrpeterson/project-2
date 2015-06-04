@@ -8,7 +8,7 @@ class Post
 		@body = params["body"]
 		@location = params["location"]
 		@num_likes = params["num_likes"] || 0
-		@created = Time.parse(params["created"])
+		@created = Time.parse(params["created"]) unless params["created"].nil?
 		@author = "#{params["fname"]} #{params["lname"]}".chomp
 	end
 
@@ -23,7 +23,7 @@ class Post
 	end
 
 	def self.find_by_id(id)
-		result = $db.exec_params("SELECT posts.*, users.fname, users.lname FROM posts JOIN users ON users.id=posts.user_id WHERE id=$1", [id]).first
+		result = $db.exec_params("SELECT posts.*, users.fname, users.lname FROM posts JOIN users ON users.id=posts.user_id WHERE posts.id=$1", [id]).first
 		Post.new(result)
 	end
 
@@ -36,7 +36,8 @@ class Post
 	end
 
 	def save_new
-		$db.exec_params("INSERT INTO posts (user_id, title, body, num_likes, created) VALUES ($1, $2, $3, $4, $5)", [@user_id, @title, @body, @num_likes, @created])
+		result = $db.exec_params("INSERT INTO posts (user_id, title, body, created) VALUES ($1, $2, $3, CURRENT_TIMESTAMP) RETURNING id", [@user_id, @title, @body]).first
+		result["id"]
 	end
 
 	def update
