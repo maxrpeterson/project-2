@@ -1,7 +1,9 @@
 body {
 	margin: 0;
 	font-family: sans-serif;
+	/*background: #353535;*/
 }
+
 #background-color {
 	position: fixed;
 	z-index: -999;
@@ -30,17 +32,25 @@ a {
 	color: inherit;
 }
 a:hover {
-	text-decoration: underline;
+	text-decoration: none;
 }
 #login {
 	display: inline-block;
+}
+.right {
 	float: right;
+}
+.clear-right {
+	clear: right;
 }
 .container {
 	background: rgba(255,255,255,0.7);
 	max-width: 940px;
 	margin: 8em auto 0 auto;
 	padding: 1em 1em;
+}
+.container div {
+	margin: 1em 0 2em 0;
 }
 #new-post-button {
 	padding: 0.6em;
@@ -58,6 +68,7 @@ ul.post-list {
 	list-style: none;
 }
 .post-list li {
+	position: relative;
 	padding: 0.2em 1em;
 	margin: 1em 0;
 	background: #ffffff;
@@ -65,6 +76,18 @@ ul.post-list {
 }
 .post-list li:hover {
 	background: #f0f0f0;
+}
+.post-list h3, .post-list h6 {
+	display: inline-block;
+}
+.post-list .post-info {
+	
+}
+.post-list h3:hover {
+	text-decoration: inherit;
+}
+.post-list h5 {
+	margin: -1em 0 0.5em 0;
 }
 .post p {
 	font-size: 16px;

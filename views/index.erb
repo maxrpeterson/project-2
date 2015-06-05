@@ -1,8 +1,15 @@
 <a href="/posts/new" id="new-post-button">New Post...</a>
 <ul class="post-list">
 	<% @posts.each do|post| %>
-	<a href="/posts/<%= post.id %>"><li><h3><%= post.title %></h3></li></a>
+	<a href="/posts/<%= post.id %>">
+		<li>
+			<div class="post-info right">
+				<h6 class="clear-right"><%= post.timestamp %></h6>
+				<h6 class=""><%= post.num_comments %> comments</h6>
+			</div>
+			<h3><%= post.title %></h3>
+			<h5>Posted by <%= post.author %></h5>
+		</li>
+	</a>
 	<% end %>
 </ul>
-<%= @message %>
-<%= @session_id %>

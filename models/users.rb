@@ -8,7 +8,7 @@ class User
 		@gender = params["gender"]
 		@email = params["email"]
 		@password = params["password"]
-		@created = params["created"]
+		@created = Time.parse(params["created"]) unless params["created"].nil?
 	end
 
 	attr_reader :id, :fname, :lname, :gender, :email
@@ -22,7 +22,7 @@ class User
 	def self.login(email, password)
 		user = self.find_by_email(email)
 		if !user.nil? && user.password_correct?(password)
-			user.id
+			user
 		else
 			nil
 		end
@@ -41,16 +41,20 @@ class User
 		end
 	end
 
-	def save
-	end
-
-	def find_all_posts
-		# uhhhh... should this be a "user" method? or a "posts" method?
-		# result = $db.exec_params("SELECT * FROM ")
-	end
-
 	def password_correct?(password)
 		@password == password
+	end
+
+	def save_new
+		$db.exec_params("INSERT INTO users (fname, lname, gender, password, created) VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP)", [@fname, @lname, @email, @password])
+	end
+
+	def update
+		$db.exec_params("UPDATE users SET fname=$1, lname=$2, gender=$3, email=$4 WHERE id=$5", [@fname, @lname, @email, @gender, @id])
+	end
+
+	def timestamp
+		@created.strftime("Registered %a, %b %e %Y at %l:%M%P")
 	end
 
 end

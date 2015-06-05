@@ -15,57 +15,62 @@ module Forum
 
 		$markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(filter_html: true, safe_links_only: true))
 
+		before do
+			@user_name = session[:user_name]
+		end
+
 		# Homepage
 		get '/' do
-			@session_id = session[:user_id] unless session[:user_id].nil?
 			@posts = Post.get_all
 			erb :index
 		end
 
 		# sign in/sign up
 		post '/login' do
-			result = User.login(params[:email], params[:password])
-			if result.nil?
+			user = User.login(params[:email], params[:password])
+			if user.nil?
 				@message = "Incorrect username or password"
+				@posts = Post.get_all
 				erb :index
 			else
-				session[:user_id] = result
+				session[:user_id] = user.id
+				session[:user_name] = user.full_name
+				binding.pry
 				redirect '/'
 			end
 		end
 
 		delete '/login' do
 			session[:user_id] = nil
+			@message = "Logged Out!"
 			redirect '/'
 		end
 
 		# USERS
 		get '/users/:id' do
 			@user = User.find_by_id(params[:id])
+			@posts = Post.find_by_user_id(params[:id])
 			erb :user
 		end
 
 		# Create user
 		post '/users' do
-			binding.pry
-			User.new()
+			user = User.new(params)
+			user.save_new
 		end
 
 		# posts
 		get '/posts/new' do
-			erb :new_post
+				erb :new_post
 		end
 
 		get '/posts/:id' do
 			@post = Post.find_by_id(params[:id])
-
 			@body = $markdown.render(@post.body)
-
 			erb :post
 		end
 
 		post '/posts' do
-
 			if session[:user_id].nil?
 				status 403
 				"Unauthorized, please log in."
@@ -78,4 +83,6 @@ module Forum
 		end
 
 	end
+
+
 end

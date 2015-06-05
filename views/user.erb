@@ -1,1 +1,17 @@
-<h1><%= "#{@user.fname} #{@user.lname}" %></h1>
+<div class="user info">
+	<h1><%= @user.full_name %></h1>
+	<h5><%= @user.timestamp %></h5>
+</div>
+<div class="user posts">
+	<h2><%= @user.full_name %>'s Posts:</h2>
+	<% if @posts.empty? %>
+	<h3>No posts yet...</h3>
+	<% else %>
+	<ul class="post-list">
+		<% @posts.each do|post| %>
+		<h6 class="right"><%= post.timestamp %></h6>
+		<a href="/posts/<%= post.id %>"><li><h3><%= post.title %></h3></li></a>
+		<% end %>
+	</ul>
+	<% end %>
+</div>

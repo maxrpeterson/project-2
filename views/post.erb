@@ -1,11 +1,19 @@
 <div class="post">
 	<div class="title">
 		<h1><%= @post.title %></h1>
+		<h3>Posted by <a href="/users/<%= @post.user_id %>"><%= @post.author %></a></h3>
 		<h4><%= @post.timestamp %></h4>
 	</div>
 	<hr>
-	<div class="post-body">
+	<div class="post body">
 		<%= @body %>
 	</div>
 </div>
-<div class="post "
+<hr>
+<div class="post comments">
+	<h2>Comments</h2>
+	<% if @comments.empty? %>
+	<h3>No comments yet...</h3>
+	<% else %>
+	<ul class="comments list"
+</div>
