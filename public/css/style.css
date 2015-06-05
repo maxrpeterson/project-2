@@ -2,18 +2,90 @@ body {
 	margin: 0;
 	font-family: sans-serif;
 }
-header {
+#background-color {
 	position: fixed;
+	z-index: -999;
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 4.5em;
+	height: 100%;
+	background: linear-gradient(#1F8087,#49855F);
+	background-repeat: no-repeat;
+}
+header {
+	background: rgba(255,255,255,0.7);
+	position: fixed;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	width: 100%;
 	border-bottom: 1px solid black;
 }
+header h1 {
+	line-height: 3em;
+	margin: 0 0 0 1em;
+}
+a {
+	text-decoration: none;
+	color: inherit;
+}
+a:hover {
+	text-decoration: underline;
+}
 #login {
+	display: inline-block;
 	float: right;
 }
 .container {
-	max-width: 1000px;
-	margin: 3.5em auto 0 auto;
+	background: rgba(255,255,255,0.7);
+	max-width: 940px;
+	margin: 8em auto 0 auto;
+	padding: 1em 1em;
+}
+#new-post-button {
+	padding: 0.6em;
+	margin: 0.8em 0;
+	font-size: 14px;
+	background: #cfcfcf;
+	border: 1px solid black;
+}
+#new-post-button:hover {
+	background: #c0c0c0;
+	cursor: pointer;
+}
+ul.post-list {
+	padding: 0;
+	list-style: none;
+}
+.post-list li {
+	padding: 0.2em 1em;
+	margin: 1em 0;
+	background: #cfcfcf;
+	border-radius: 2px;
+}
+.post-list li:hover {
+	background: #c0c0c0;
+}
+.new-post input {
+	display: block;
+	font-size: 16px;
+	margin: 0 auto;
+	padding: 1em;
+	background: white;
+}
+.new-post input[type="text"] {
+	width: 95%;
+}
+.new-post input[type="submit"] {
+	border-radius: 2px;
+	border: none;
+}
+.new-post textarea {
+	width: 95%;
+	border: none;
+	display: block;
+	font-size: 16px;
+	margin: 1em auto;
+	padding: 1em;
+	height: 25em;
 }

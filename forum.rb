@@ -13,7 +13,7 @@ module Forum
       set :sessions, true
 		end
 
-		$markdown = Redcarpet::Render::HTML.new(filter_html: true, safe_links_only: true)
+		$markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(filter_html: true, safe_links_only: true))
 
 		# Homepage
 		get '/' do
@@ -45,7 +45,10 @@ module Forum
 			erb :user
 		end
 
-		post '/users/' do
+		# Create user
+		post '/users' do
+			binding.pry
+			User.new()
 		end
 
 		# posts
@@ -55,7 +58,9 @@ module Forum
 
 		get '/posts/:id' do
 			@post = Post.find_by_id(params[:id])
-			# @post.body = $markdown.render(@post.body)
+
+			@body = $markdown.render(@post.body)
+
 			erb :post
 		end
 

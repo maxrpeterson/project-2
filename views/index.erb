@@ -1,6 +1,7 @@
-<ul>
+<a href="/posts/new" id="new-post-button">New Post...</a>
+<ul class="post-list">
 	<% @posts.each do|post| %>
-	<li><a href="/posts/<%= post.id %>"><%= post.title %></a></li>
+	<a href="/posts/<%= post.id %>"><li><h3><%= post.title %></h3></li></a>
 	<% end %>
 </ul>
 <%= @message %>
