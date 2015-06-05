@@ -44,6 +44,8 @@ class Post
 		# $db.exec_params("")
 	end
 
-
+	def timestamp
+		@created.strftime("Posted %a, %b %e %Y at %l:%M%P")
+	end
 
 end

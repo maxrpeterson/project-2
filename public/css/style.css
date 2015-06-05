@@ -46,11 +46,11 @@ a:hover {
 	padding: 0.6em;
 	margin: 0.8em 0;
 	font-size: 14px;
-	background: #cfcfcf;
+	background: #ffffff;
 	border: 1px solid black;
 }
 #new-post-button:hover {
-	background: #c0c0c0;
+	background: #f0f0f0;
 	cursor: pointer;
 }
 ul.post-list {
@@ -60,18 +60,21 @@ ul.post-list {
 .post-list li {
 	padding: 0.2em 1em;
 	margin: 1em 0;
-	background: #cfcfcf;
+	background: #ffffff;
 	border-radius: 2px;
 }
 .post-list li:hover {
-	background: #c0c0c0;
+	background: #f0f0f0;
+}
+.post p {
+	font-size: 16px;
 }
 .new-post input {
 	display: block;
 	font-size: 16px;
 	margin: 0 auto;
 	padding: 1em;
-	background: white;
+	background: #ffffff;
 }
 .new-post input[type="text"] {
 	width: 95%;
