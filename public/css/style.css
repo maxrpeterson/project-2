@@ -11,7 +11,7 @@ body {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(#1F8087,#49855F);
+	background: linear-gradient(#12474C,#294A35);
 	background-repeat: no-repeat;
 }
 header {
@@ -21,7 +21,6 @@ header {
 	top: 0;
 	left: 0;
 	width: 100%;
-	border-bottom: 1px solid black;
 }
 header h1 {
 	line-height: 3em;
@@ -32,7 +31,7 @@ a {
 	color: inherit;
 }
 a:hover {
-	text-decoration: none;
+	text-decoration: line-through;
 }
 #login {
 	display: inline-block;
@@ -57,11 +56,13 @@ a:hover {
 	margin: 0.8em 0;
 	font-size: 14px;
 	background: #ffffff;
-	border: 1px solid black;
+	border: none;
+	border-radius: 0.2em;
 }
 #new-post-button:hover {
 	background: #f0f0f0;
 	cursor: pointer;
+	text-decoration: underline;
 }
 ul.post-list {
 	padding: 0;
@@ -79,9 +80,6 @@ ul.post-list {
 }
 .post-list h3, .post-list h6 {
 	display: inline-block;
-}
-.post-list .post-info {
-	
 }
 .post-list h3:hover {
 	text-decoration: inherit;

@@ -16,7 +16,11 @@ module Forum
 		$markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(filter_html: true, safe_links_only: true))
 
 		before do
-			@user_name = session[:user_name]
+			if session[:user_name]
+				@user_name = session[:user_name]
+			else
+				@user_name = nil
+			end
 		end
 
 		# Homepage
@@ -35,7 +39,6 @@ module Forum
 			else
 				session[:user_id] = user.id
 				session[:user_name] = user.full_name
-				binding.pry
 				redirect '/'
 			end
 		end
@@ -67,22 +70,26 @@ module Forum
 		get '/posts/:id' do
 			@post = Post.find_by_id(params[:id])
 			@body = $markdown.render(@post.body)
+			@comments = []
 			erb :post
 		end
 
+		#make post
 		post '/posts' do
 			if session[:user_id].nil?
 				status 403
 				"Unauthorized, please log in."
 			else
-				#make post
 				post = Post.new "user_id" => session[:user_id], "title" => params[:title], "body" => params[:body]
 				@post_id = post.save_new
 				redirect "/posts/#{@post_id}"
 			end
 		end
 
-	end
+		post '/posts/:post_id/comments' do
 
+		end
+
+	end
 
 end

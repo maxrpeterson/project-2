@@ -3,10 +3,10 @@
 	<% @posts.each do|post| %>
 	<a href="/posts/<%= post.id %>">
 		<li>
-			<div class="post-info right">
-				<h6 class="clear-right"><%= post.timestamp %></h6>
-				<h6 class=""><%= post.num_comments %> comments</h6>
-			</div>
+			<h6 class="right">
+				<span><%= post.timestamp %></span><br>
+				<span><%= post.num_comments %> comments</span>
+			</h6>
 			<h3><%= post.title %></h3>
 			<h5>Posted by <%= post.author %></h5>
 		</li>

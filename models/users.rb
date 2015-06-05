@@ -46,7 +46,7 @@ class User
 	end
 
 	def save_new
-		$db.exec_params("INSERT INTO users (fname, lname, gender, password, created) VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP)", [@fname, @lname, @email, @password])
+		$db.exec_params("INSERT INTO users (fname, lname, gender, email, password, created) VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP)", [@fname, @lname, @gender, @email, @password])
 	end
 
 	def update
