@@ -2,7 +2,7 @@
 	<div class="title">
 		<h5 class="right"><%= @post.timestamp %></h5>
 		<h1><%= @post.title %></h1>
-		<h5 class="right">Liked <%= @post.num_likes %> time(s)!</h5>
+		<h5 class="right">Liked <%= @post.likes %> time(s)!</h5>
 		<h4>Posted by <a href="/users/<%= @post.user_id %>"><%= @post.author %></a></h4>
 	</div>
 	<div class="post body">
@@ -34,7 +34,7 @@
 	<% if @user_name %>
 	<form method="POST" action="/posts/<%= @post.id %>/comments">
 		<input type="Text" name="body" placeholder="Write a comment..." required>
-		<input type="submit" value="Comment">
+		<button type="submit" value="Comment">Comment</button>
 	</form>
 	<% end %>
 </div>

@@ -6,6 +6,7 @@ require "rest-client"
 require_relative "models/users"
 require_relative "models/posts"
 require_relative "models/comments"
+require_relative "models/likes"
 
 module Forum
 	class Server < Sinatra::Base
@@ -65,14 +66,24 @@ module Forum
 
 		# posts
 		get '/posts/new' do
+			if @user_name
 				erb :new_post
+			else
+				@message = "Please log in!"
+				erb :error
+			end
 		end
 
 		get '/posts/:id' do
 			@post = Post.find_by_id(params[:id])
-			@body = $markdown.render(@post.body)
-			@comments = Comment.get_all_for_post(params[:id])
-			erb :post
+			if @post
+				@body = $markdown.render(@post.body)
+				@comments = Comment.get_all_for_post(params[:id])
+				erb :post
+			else
+				@message = "Post doesn't exist"
+				erb :error
+			end
 		end
 
 		#make post

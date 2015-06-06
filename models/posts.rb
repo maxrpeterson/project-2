@@ -1,4 +1,4 @@
-require_relative "../db/db_connection"
+require_relative "../db/connection"
 
 class Post
 	def initialize(params={})
@@ -7,16 +7,19 @@ class Post
 		@title = params["title"]
 		@body = params["body"]
 		@location = params["location"]
-		@num_likes = params["num_likes"].to_i || 0
+		@likes = params["likes"].to_i || 0
 		@created = Time.parse(params["created"]) unless params["created"].nil?
 		@author = "#{params["fname"]} #{params["lname"]}".chomp
 		@num_comments = params["num_comments"]
 	end
 
-	attr_reader :id, :user_id, :title, :body, :location, :num_likes, :created, :author, :num_comments
+	attr_reader :id, :user_id, :title, :body, :location, :likes, :created, :author, :num_comments
 
 	def self.get_all
-		posts = $db.exec_params("WITH comments_per_post AS (SELECT post_id, count(id) AS num_comments FROM comments GROUP BY post_id) SELECT posts.id, posts.title, posts.created, posts.num_likes, users.fname, users.lname, comments_per_post.num_comments FROM posts JOIN users ON posts.user_id=users.id LEFT JOIN comments_per_post ON posts.id=comments_per_post.post_id ORDER BY posts.num_likes DESC NULLS last, posts.created DESC")
+		# This query is quite long, but it seems to be the only way i could find to
+		# get this info from all three tables easily.
+		# It returns already sorted by the number of votes
+		posts = $db.exec_params("WITH comments_per_post AS (SELECT post_id, count(id) AS num_comments FROM comments GROUP BY post_id), likes_per_post AS (SELECT post_id, count(user_id) AS likes FROM likes GROUP BY post_id) SELECT posts.id, posts.title, posts.created, users.fname, users.lname, comments_per_post.num_comments, likes_per_post.likes FROM posts JOIN users ON posts.user_id=users.id LEFT JOIN comments_per_post ON posts.id=comments_per_post.post_id LEFT JOIN likes_per_post ON posts.id=likes_per_post.post_id ORDER BY likes_per_post.likes DESC NULLS last, posts.created DESC")
 		posts.map do |post|
 			Post.new(post)
 		end
@@ -24,7 +27,7 @@ class Post
 
 	def self.find_by_id(id)
 		result = $db.exec_params("SELECT posts.*, users.fname, users.lname FROM posts JOIN users ON users.id=posts.user_id WHERE posts.id=$1", [id]).first
-		Post.new(result)
+		Post.new(result) unless result.nil?
 	end
 
 	def self.find_by_user_id(id)

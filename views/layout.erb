@@ -25,7 +25,11 @@
 				<input type="password" name="password" placeholder="Password (required)" required>
 				<input type="submit" value="Register!">
 			</form>
-			<%= @message %>
+			<% if @user_name %>
+			<h6>Logged in as <%= @user_name %></h6>
+			<% else %>
+			<h6>Not logged in</h6>
+			<% end %>
 		</div>
 		<h1><a href="/">Jake's Forum</a></h1>
 	</header>

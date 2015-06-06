@@ -18,7 +18,6 @@ CREATE TABLE posts (
   title VARCHAR NOT NULL,
   body TEXT NOT NULL,
   location VARCHAR,
-  num_likes INTEGER,
   created TIMESTAMP
 );
 
@@ -28,4 +27,9 @@ CREATE TABLE comments (
   post_id INTEGER REFERENCES posts(id),
   body VARCHAR NOT NULL,
   created TIMESTAMP
+);
+
+CREATE TABLE likes (
+  user_id INTEGER REFERENCES users(id),
+  post_id INTEGER REFERENCES posts(id)
 );

@@ -26,3 +26,16 @@ VALUES
   (1, 2, 'first!', CURRENT_TIMESTAMP),
   (2, 2, 'AGAIN?!?!', CURRENT_TIMESTAMP),
   (3, 3, 'This is very interesting!', CURRENT_TIMESTAMP);
+
+INSERT INTO likes
+  (user_id, post_id)
+VALUES
+  (1, 1),
+  (1, 2),
+  (1, 3),
+  (2, 1),
+  (2, 2),
+  (2, 3),
+  (3, 3),
+  (4, 1),
+  (4, 3);

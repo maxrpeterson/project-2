@@ -28,6 +28,9 @@ header h1 {
 	line-height: 3em;
 	margin: 0 0 0 1em;
 }
+header h6 {
+	margin: 0;
+}
 a {
 	text-decoration: none;
 	color: inherit;
@@ -52,7 +55,7 @@ a:hover {
 	padding: 1em 1em;
 }
 .container div {
-	margin: 1em 0 2em 0;
+	margin: 1em 0 1.5em 0;
 }
 #new-post-button {
 	padding: 0.6em;
@@ -117,20 +120,23 @@ ul.post-list {
 	font-size: 16px;
 	margin: 1em auto;
 	padding: 1em;
-	height: 25em;
+	height: 23em;
 }
-.comments input {
+.comments input, .comments button {
 	display: inline-block;
-	margin: 1em auto;
+	margin: 1em;
 	font-size: 12px;
 	padding: 1em;
 }
 .comments input[type="text"] {
 	width: 80%;
 }
-.comments input[type="submit"] {
+.comments button {
 	width: 10%;
 	height: 100%;
+	background: #ffffff;
+	border: none;
+	border-radius: 2px;
 }
 .comments ul {
 	list-style: none;
