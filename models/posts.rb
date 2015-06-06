@@ -31,7 +31,7 @@ class Post
 	end
 
 	def self.find_by_user_id(id)
-		posts = $db.exec_params("SELECT posts.id, posts.title, posts.user_id, posts.created, users.fname, users.lname FROM posts JOIN users ON users.id=posts.user_id WHERE posts.user_id=$1", [id]).entries
+		posts = $db.exec_params("SELECT posts.id, posts.title, posts.user_id, posts.created, posts.location, users.fname, users.lname FROM posts JOIN users ON users.id=posts.user_id WHERE posts.user_id=$1", [id]).entries
 		posts.map do |post|
 			Post.new(post)
 		end
@@ -47,7 +47,7 @@ class Post
 	end
 
 	def save_new
-		result = $db.exec_params("INSERT INTO posts (user_id, title, body, created) VALUES ($1, $2, $3, CURRENT_TIMESTAMP) RETURNING id", [@user_id, @title, @body]).first
+		result = $db.exec_params("INSERT INTO posts (user_id, title, body, location, created) VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP) RETURNING id", [@user_id, @title, @body, @location]).first
 		result["id"]
 	end
 

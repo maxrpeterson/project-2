@@ -20,8 +20,7 @@ module Forum
 		before do
 			if session[:user_name]
 				@user_name = session[:user_name]
-			else
-				@user_name = nil
+				@user_id = session[:user_id]
 			end
 		end
 
@@ -32,7 +31,7 @@ module Forum
 		end
 
 		# sign in/sign up
-		post '/login' do
+		post '/users/login' do
 			user = User.login(params[:email], params[:password])
 			if user.nil?
 				@message = "Incorrect username or password"
@@ -45,9 +44,8 @@ module Forum
 			end
 		end
 
-		delete '/login' do
-			session[:user_id] = nil
-			@message = "Logged Out!"
+		delete '/users/login' do
+			session.clear
 			redirect '/'
 		end
 
@@ -65,8 +63,13 @@ module Forum
 		end
 
 		# posts
-		get '/posts' do
-			redirect '/'
+		get '/posts/new' do
+			if @user_name
+				erb :new_post
+			else
+				@message = "Please log in!"
+				erb :error
+			end
 		end
 
 		get '/posts/:id' do
@@ -81,31 +84,30 @@ module Forum
 			end
 		end
 
-		get '/posts/new' do
-			if @user_name
-				erb :new_post
-			else
-				@message = "Please log in!"
-				erb :error
-			end
-		end
-
 		#make post
 		post '/posts' do
 			if session[:user_id].nil?
 				status 403
 				"Unauthorized, please log in."
 			else
-				post = Post.new "user_id" => session[:user_id], "title" => params[:title], "body" => params[:body]
+				ip = (request.ip == "::1") ? "96.232.156.38" : request.ip
+				ip_info = JSON.parse(RestClient.get("http://ipinfo.io/#{ip}/json"))
+				location = ip_info["city"] + ", " + ip_info["region"]
+				post = Post.new "user_id" => session[:user_id], "title" => params[:title], "body" => params[:body], "location" => location
 				@post_id = post.save_new
 				redirect "/posts/#{@post_id}"
 			end
 		end
 
+		# Make a comment
 		post '/posts/:post_id/comments' do
 			comment = Comment.new "user_id" => session[:user_id], "post_id" => params[:post_id], "body" => params[:body]
 			comment.save_new
 			redirect "/posts/#{params[:post_id]}"
+		end
+
+		get '/posts' do
+			redirect '/'
 		end
 
 		# likes
