@@ -65,13 +65,8 @@ module Forum
 		end
 
 		# posts
-		get '/posts/new' do
-			if @user_name
-				erb :new_post
-			else
-				@message = "Please log in!"
-				erb :error
-			end
+		get '/posts' do
+			redirect '/'
 		end
 
 		get '/posts/:id' do
@@ -82,6 +77,15 @@ module Forum
 				erb :post
 			else
 				@message = "Post doesn't exist"
+				erb :error
+			end
+		end
+
+		get '/posts/new' do
+			if @user_name
+				erb :new_post
+			else
+				@message = "Please log in!"
 				erb :error
 			end
 		end
@@ -104,6 +108,7 @@ module Forum
 			redirect "/posts/#{params[:post_id]}"
 		end
 
+		# likes
 		post '/posts/:id/likes' do
 			post = Post.find_by_id(params[:id])
 			post.like
@@ -111,12 +116,5 @@ module Forum
 			redirect "/posts/#{params[:id]}"
 		end
 
-	end
-
-	# class Location
-	# 	def get(ip)
-
-	# 	end
-	# end
-
-end
+	end # class
+end # module
