@@ -2,6 +2,7 @@ require "sinatra/base"
 require "sinatra/reloader"
 require "pry"
 require "redcarpet"
+require "rest-client"
 require_relative "models/users"
 require_relative "models/posts"
 require_relative "models/comments"
@@ -70,7 +71,7 @@ module Forum
 		get '/posts/:id' do
 			@post = Post.find_by_id(params[:id])
 			@body = $markdown.render(@post.body)
-			@comments = []
+			@comments = Comment.get_all_for_post(params[:id])
 			erb :post
 		end
 
@@ -87,9 +88,24 @@ module Forum
 		end
 
 		post '/posts/:post_id/comments' do
+			comment = Comment.new "user_id" => session[:user_id], "post_id" => params[:post_id], "body" => params[:body]
+			comment.save_new
+			redirect "/posts/#{params[:post_id]}"
+		end
 
+		post '/posts/:id/likes' do
+			post = Post.find_by_id(params[:id])
+			post.like
+			post.update
+			redirect "/posts/#{params[:id]}"
 		end
 
 	end
+
+	# class Location
+	# 	def get(ip)
+
+	# 	end
+	# end
 
 end

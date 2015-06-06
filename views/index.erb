@@ -5,7 +5,7 @@
 		<li>
 			<h6 class="right">
 				<span><%= post.timestamp %></span><br>
-				<span><%= post.num_comments %> comments</span>
+				<span>Liked <%= post.num_likes %> times, <%= post.num_comments || 0 %> comments</span>
 			</h6>
 			<h3><%= post.title %></h3>
 			<h5>Posted by <%= post.author %></h5>

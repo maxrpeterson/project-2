@@ -7,7 +7,7 @@ class Post
 		@title = params["title"]
 		@body = params["body"]
 		@location = params["location"]
-		@num_likes = params["num_likes"] || 0
+		@num_likes = params["num_likes"].to_i || 0
 		@created = Time.parse(params["created"]) unless params["created"].nil?
 		@author = "#{params["fname"]} #{params["lname"]}".chomp
 		@num_comments = params["num_comments"]
@@ -16,7 +16,7 @@ class Post
 	attr_reader :id, :user_id, :title, :body, :location, :num_likes, :created, :author, :num_comments
 
 	def self.get_all
-		posts = $db.exec_params("WITH comments_per_post AS (SELECT post_id, count(id) AS num_comments FROM comments GROUP BY post_id) SELECT posts.id, posts.title, posts.created, users.fname, users.lname, comments_per_post.num_comments FROM posts JOIN users ON posts.user_id=users.id JOIN comments_per_post ON posts.id=comments_per_post.post_id")
+		posts = $db.exec_params("WITH comments_per_post AS (SELECT post_id, count(id) AS num_comments FROM comments GROUP BY post_id) SELECT posts.id, posts.title, posts.created, posts.num_likes, users.fname, users.lname, comments_per_post.num_comments FROM posts JOIN users ON posts.user_id=users.id LEFT JOIN comments_per_post ON posts.id=comments_per_post.post_id ORDER BY posts.num_likes DESC NULLS last, posts.created DESC")
 		posts.map do |post|
 			Post.new(post)
 		end
@@ -36,6 +36,7 @@ class Post
 
 	def like
 		@num_likes += 1
+		self.update
 	end
 
 	def get_comments
@@ -47,9 +48,10 @@ class Post
 		result["id"]
 	end
 
-	# def update
-	# 	$db.exec_params("")
-	# end
+	def update
+		$db.exec_params("UPDATE posts SET title=$1, body=$2, num_likes=$3 WHERE id=$4", [@title, @body, @num_likes, @id])
+		@id
+	end
 
 	def timestamp
 		@created.strftime("Posted %a, %b %e %Y at %l:%M%P")

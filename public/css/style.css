@@ -15,9 +15,11 @@ body {
 	background-repeat: no-repeat;
 }
 header {
-	background: rgba(255,255,255,0.7);
+	background: #b8c8c9;
+	/*border-bottom: 3px solid #154849;*/
+	box-shadow: 0 0 10px rgba(0,0,0,0.3);
 	position: fixed;
-	z-index: -1;
+	z-index: 999;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -31,12 +33,13 @@ a {
 	color: inherit;
 }
 a:hover {
-	text-decoration: line-through;
+	text-decoration: underline;
 }
 #login {
 	display: inline-block;
 }
 .right {
+	display: inline-block;
 	float: right;
 }
 .clear-right {
@@ -68,7 +71,7 @@ ul.post-list {
 	padding: 0;
 	list-style: none;
 }
-.post-list li {
+.post-list li, .comments .comment {
 	position: relative;
 	padding: 0.2em 1em;
 	margin: 1em 0;
@@ -78,7 +81,7 @@ ul.post-list {
 .post-list li:hover {
 	background: #f0f0f0;
 }
-.post-list h3, .post-list h6 {
+.post-list h3, h6 {
 	display: inline-block;
 }
 .post-list h3:hover {
@@ -86,6 +89,9 @@ ul.post-list {
 }
 .post-list h5 {
 	margin: -1em 0 0.5em 0;
+}
+.post .title h1, .post .title h5 {
+	margin-top: 0.2em;
 }
 .post p {
 	font-size: 16px;
@@ -112,4 +118,24 @@ ul.post-list {
 	margin: 1em auto;
 	padding: 1em;
 	height: 25em;
+}
+.comments input {
+	display: inline-block;
+	margin: 1em auto;
+	font-size: 12px;
+	padding: 1em;
+}
+.comments input[type="text"] {
+	width: 80%;
+}
+.comments input[type="submit"] {
+	width: 10%;
+	height: 100%;
+}
+.comments ul {
+	list-style: none;
+	padding: 0;
+}
+.comments h6 {
+	margin: 1em 0 0 0;
 }

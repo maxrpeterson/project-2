@@ -1,15 +1,18 @@
 <div class="post">
 	<div class="title">
+		<h5 class="right"><%= @post.timestamp %></h5>
 		<h1><%= @post.title %></h1>
-		<h3>Posted by <a href="/users/<%= @post.user_id %>"><%= @post.author %></a></h3>
-		<h4><%= @post.timestamp %></h4>
+		<h5 class="right">Liked <%= @post.num_likes %> time(s)!</h5>
+		<h4>Posted by <a href="/users/<%= @post.user_id %>"><%= @post.author %></a></h4>
 	</div>
-	<hr>
 	<div class="post body">
 		<%= @body %>
 	</div>
 </div>
 <hr>
+<form method="POST" action="/posts/<%= @post.id %>/likes">
+	<input type="submit" value="Like +1">
+</form>
 <div class="post comments">
 	<h2>Comments</h2>
 	<% if @comments.empty? %>
@@ -19,8 +22,11 @@
 		<% @comments.each do|comment| %>
 
 		<li class="comment">
+			<h6 class="right">
+				<span><%= comment.author %></span><br>
+				<span><%= comment.timestamp %></span>
+			</h6>
 			<p><%= comment.body %></p>
-
 		</li>
 		<% end %>
 	</ul>
