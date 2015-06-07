@@ -50,7 +50,7 @@ header h5 {
 	margin: 0.5em 0 0 0;
 	padding: 0.4em;
 }
-.log-out input {
+header h5, .log-out input {
 	cursor: pointer;	
 }
 .log-out input:hover {
