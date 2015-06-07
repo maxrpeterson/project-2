@@ -39,13 +39,13 @@ module Forum
 			else
 				session[:user_id] = user.id
 				session[:user_name] = user.full_name
-				redirect '/'
+				redirect back
 			end
 		end
 
 		delete '/users/login' do
 			session.clear
-			redirect '/'
+			redirect back
 		end
 
 		# USERS
@@ -89,7 +89,7 @@ module Forum
 				status 403
 				"Unauthorized, please log in."
 			else
-				ip = (request.ip == "::1") ? "96.232.156.38" : request.ip
+				ip = (request.ip == "::1") ? "69.203.152.3" : request.ip
 				ip_info = JSON.parse(RestClient.get("http://ipinfo.io/#{ip}/json"))
 				location = ip_info["city"] + ", " + ip_info["region"]
 				post = Post.new "user_id" => session[:user_id], "title" => params[:title], "body" => params[:body], "location" => location

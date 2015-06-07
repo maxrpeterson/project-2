@@ -3,7 +3,6 @@ body {
 	font-family: sans-serif;
 	/*background: #353535;*/
 }
-
 #background-color {
 	position: fixed;
 	z-index: -999;
@@ -40,8 +39,6 @@ header h5 {
 	margin: 0.5em 2em 0.5em 0;
 	padding: 0.3em;
 	cursor: pointer;
-	background: #ffffff;
-	border-radius: 2px;
 }
 header h5:hover {
 	text-decoration: underline;

@@ -10,7 +10,7 @@
 	</div>
 </div>
 <hr>
-<% if @user_name %>
+<% if @user_name && !@post.user_has_liked?(@user_id) %>
 <form method="POST" action="/posts/<%= @post.id %>/likes">
 	<input type="submit" value="Like +1">
 </form>

@@ -56,6 +56,11 @@ class Post
 		@id
 	end
 
+	def user_has_liked?(user_id)
+		likes = $db.exec_params("SELECT user_id FROM likes WHERE post_id=$1", [@id]).values.flatten
+		likes.include?(user_id)
+	end
+
 	def timestamp
 		@created.strftime("Posted %a, %b %e %Y at %l:%M%P")
 	end
