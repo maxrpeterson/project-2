@@ -15,7 +15,7 @@ module Forum
 	    set :bind, '0.0.0.0'
 		end
 
-		$markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(filter_html: true, safe_links_only: true))
+		$markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(filter_html: true))
 
 		before do
 			if session[:user_name]

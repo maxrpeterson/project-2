@@ -24,7 +24,7 @@ header {
 	width: 100%;
 }
 header h1, #user-actions {
-	margin: 0 1em 0 1em;
+	margin: 0 1em;
 }
 header h1 {
 	line-height: 3em;
@@ -50,10 +50,10 @@ header h5 {
 	margin: 0.5em 0 0 0;
 	padding: 0.4em;
 }
-header h5, .log-out input {
+.log-out input {
 	cursor: pointer;	
 }
-header h5:hover, .log-out input:hover {
+.log-out input:hover {
 	text-decoration: underline;
 }
 .active {
@@ -66,18 +66,22 @@ header h5:hover, .log-out input:hover {
 	width: 100%;
 	height: 4em;
 }
-#user-actions input[type="submit"] {
+#log-reg input[type="submit"] {
 	margin-top: 0.5em;
-	background: none;
+	background: #ffffff;
 	border: 1px solid #d0d0d0;
 	border-radius: 2px;
 }
 a {
 	text-decoration: none;
-	color: inherit;
+	color: #555555;
 }
 a:hover {
-	text-decoration: underline;
+	color: #000;
+}
+blockquote {
+	background: rgba(255,255,255,0.7);
+	padding: 0.5em;
 }
 .right {
 	float: right;
@@ -106,7 +110,7 @@ a:hover {
 	font-size: 14px;
 	background: #ffffff;
 	border: none;
-	border-radius: 0.2em;
+	border-radius: 0.2px;
 }
 #new-post-button:hover {
 	background: #f0f0f0;
@@ -164,6 +168,15 @@ ul.post-list {
 	margin: 1em auto;
 	padding: 1em;
 	height: 23em;
+}
+#like {
+	border: none;
+	border-radius: 2px;
+	background: #ffffff;
+	padding: 0.5em;
+}
+#like:hover {
+	text-decoration: underline;
 }
 .comments input, .comments button {
 	display: inline-block;
