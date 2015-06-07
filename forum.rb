@@ -12,6 +12,7 @@ module Forum
 		configure do
 			register Sinatra::Reloader
       set :sessions, true
+	    set :bind, '0.0.0.0'
 		end
 
 		$markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(filter_html: true, safe_links_only: true))
@@ -57,8 +58,19 @@ module Forum
 
 		# Create user
 		post '/users' do
-			user = User.new(params)
-			user.save_new
+			@user = User.new(params)
+			if @user.valid? == "no@"
+				@message = "Email address entered didn't have an \"@\" sign, please try again"
+				erb :error
+			elsif @user.valid?
+				@user.save_new
+				session[:user_id] = @user.id
+				session[:user_name] = @user.full_name
+				redirect "/users/#{@user.id}"
+			else
+				@message = "Registration details were not valid, please try again"
+				erb :error
+			end
 		end
 
 		# posts
@@ -87,11 +99,12 @@ module Forum
 		post '/posts' do
 			if session[:user_id].nil?
 				status 403
-				"Unauthorized, please log in."
+				@message = "Unauthorized, please log in."
+				erb :error
 			else
 				ip = (request.ip == "::1") ? "69.203.152.3" : request.ip
 				ip_info = JSON.parse(RestClient.get("http://ipinfo.io/#{ip}/json"))
-				location = ip_info["city"] + ", " + ip_info["region"]
+				location = ip_info["city"] + ", " + ip_info["region"] unless ip_info["bogon"]
 				post = Post.new "user_id" => session[:user_id], "title" => params[:title], "body" => params[:body], "location" => location
 				@post_id = post.save_new
 				redirect "/posts/#{@post_id}"

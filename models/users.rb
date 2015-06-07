@@ -28,6 +28,20 @@ class User
 		end
 	end
 
+	def valid?
+		if @fname && @email && @password
+			@fname.capitalize!
+			@email.delete!(" ")
+			if @email.include?("@")
+				true
+			else
+				"no@"
+			end
+		else
+			false
+		end
+	end
+
 	def self.find_by_email(email)
 		result = $db.exec_params("SELECT * FROM users WHERE email=$1", [email]).first
 		User.new(result)
@@ -46,7 +60,8 @@ class User
 	end
 
 	def save_new
-		$db.exec_params("INSERT INTO users (fname, lname, gender, email, password, created) VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP)", [@fname, @lname, @gender, @email, @password])
+		id = $db.exec_params("INSERT INTO users (fname, lname, gender, email, password, created) VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP) RETURNING id", [@fname, @lname, @gender, @email, @password]).first
+		@id = id["id"]
 	end
 
 	def update
