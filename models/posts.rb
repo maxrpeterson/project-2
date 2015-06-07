@@ -26,7 +26,7 @@ class Post
 	end
 
 	def self.find_by_id(id)
-		result = $db.exec_params("SELECT posts.*, users.fname, users.lname FROM posts JOIN users ON users.id=posts.user_id WHERE posts.id=$1", [id]).first
+		result = $db.exec_params("WITH num_likes AS (SELECT count(user_id) AS likes, post_id FROM likes WHERE post_id=$1 GROUP BY post_id) SELECT posts.*, users.fname, users.lname, num_likes.likes FROM posts JOIN users ON posts.user_id=users.id LEFT JOIN num_likes ON posts.id=num_likes.post_id WHERE posts.id=$1;", [id]).first
 		Post.new(result) unless result.nil?
 	end
 
@@ -37,13 +37,13 @@ class Post
 		end
 	end
 
-	def like
-		@num_likes += 1
-		self.update
-	end
-
-	def get_comments
-		# not sure if this should be a posts method or a comments method
+	def like(user_id)
+		users = $db.exec_params("SELECT user_id FROM likes WHERE post_id=$1", [@id]).values.flatten
+		if users.include?(user_id)
+			nil
+		else
+			$db.exec_params("INSERT INTO likes (post_id, user_id) VALUES ($1, $2)", [@id, user_id])
+		end
 	end
 
 	def save_new

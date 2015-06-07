@@ -6,7 +6,6 @@ require "rest-client"
 require_relative "models/users"
 require_relative "models/posts"
 require_relative "models/comments"
-require_relative "models/likes"
 
 module Forum
 	class Server < Sinatra::Base
@@ -113,8 +112,7 @@ module Forum
 		# likes
 		post '/posts/:id/likes' do
 			post = Post.find_by_id(params[:id])
-			post.like
-			post.update
+			post.like(@user_id)
 			redirect "/posts/#{params[:id]}"
 		end
 

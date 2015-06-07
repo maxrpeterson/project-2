@@ -33,6 +33,18 @@ header h1 {
 #user-actions {
 	position: relative;
 	height: 6em;
+	width: 15em;
+}
+header h5 {
+	display: inline-block;
+	margin: 0.5em 2em 0.5em 0;
+	padding: 0.3em;
+	cursor: pointer;
+	background: #ffffff;
+	border-radius: 2px;
+}
+header h5:hover {
+	text-decoration: underline;
 }
 .no-display {
 	display: none;
@@ -43,9 +55,6 @@ a {
 }
 a:hover {
 	text-decoration: underline;
-}
-#login {
-	display: inline-block;
 }
 .right {
 	display: inline-block;

@@ -17,7 +17,10 @@
 					<input type="submit" value="Log out">
 				</form>
 			</div>
+			<% else %>
 			<div id="log-reg" class="no-display">
+				<h5 class="login">Log In</h5>
+				<h5 class="register">Register</h5>
 				<div class="login">
 					<form method="POST" action="/users/login">
 						<input type="text" name="email" placeholder="Email">
@@ -35,8 +38,7 @@
 					</form>
 				</div>
 			</div>
-			<% else %>
-			<h5 class="not-logged-in">Not logged in</h5>
+			<h5 class="not-logged-in"><span>Not logged in</span></h5>
 			<% end %>
 		</div>
 		<h1><a href="/">Jake's Forum</a></h1>
@@ -47,6 +49,6 @@
 	<%= yield %>
 
 	</div>
-	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="/js/main.js"></script>
 </body>
 </html>
