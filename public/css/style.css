@@ -38,8 +38,9 @@ div.register div {
 	width: 12em;
 }
 #user-actions input[type="text"], #user-actions input[type="password"] {
+	font-size: 12px;
 	height: 2em;
-	width: 15em;
+	width: 14em;
 	border: none;
 	margin: 0.2em 0.2em;
 	border: 1px solid #d0d0d0;
@@ -61,9 +62,15 @@ header h5:hover, .log-out input:hover {
 .no-display {
 	display: none;
 }
-div.register.active {
+#log-reg > div {
 	width: 100%;
-	height: 3.7em;
+	height: 4em;
+}
+#user-actions input[type="submit"] {
+	margin-top: 0.5em;
+	background: none;
+	border: 1px solid #d0d0d0;
+	border-radius: 2px;
 }
 a {
 	text-decoration: none;
