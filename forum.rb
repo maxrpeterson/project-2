@@ -35,8 +35,7 @@ module Forum
 			user = User.login(params[:email], params[:password])
 			if user.nil?
 				@message = "Incorrect username or password"
-				@posts = Post.get_all
-				erb :index
+				erb :error
 			else
 				session[:user_id] = user.id
 				session[:user_name] = user.full_name
