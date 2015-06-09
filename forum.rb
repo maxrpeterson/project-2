@@ -1,17 +1,20 @@
 require "sinatra/base"
-require "sinatra/reloader"
-require "pry"
 require "redcarpet"
 require "rest-client"
-require_relative "models/users"
-require_relative "models/posts"
-require_relative "models/comments"
+require_relative "./models/users"
+require_relative "./models/posts"
+require_relative "./models/comments"
 
 module Forum
+
 	class Server < Sinatra::Base
 		configure do
+	    set :sessions, true
+	  end
+		configure :development do
+			require "sinatra/reloader"
+			require "pry"
 			register Sinatra::Reloader
-      set :sessions, true
 	    set :bind, '0.0.0.0'
 		end
 

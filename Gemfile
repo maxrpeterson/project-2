@@ -1,9 +1,13 @@
 # A sample Gemfile
 source "https://rubygems.org"
+ruby '2.2.0'
 
 gem "sinatra"
-gem "sinatra-contrib"
 gem "pg"
-gem "pry"
 gem "redcarpet"
 gem "rest-client"
+
+group :development do
+	gem "sinatra-contrib"
+	gem "pry"
+end
