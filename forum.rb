@@ -1,6 +1,7 @@
 require "sinatra/base"
 require "redcarpet"
 require "rest-client"
+require "pg"
 require_relative "./models/users"
 require_relative "./models/posts"
 require_relative "./models/comments"
@@ -11,6 +12,13 @@ module Forum
 		configure do
 	    set :sessions, true
 	  end
+
+	  configure :production do
+	  	require 'uri'
+			uri = URI.parse env["DATABASE_URL"]
+			$db = PG connect dbname: uri.path[1..-1], host: uri.host, port: uri.port, user: uri.user, password: uri.password
+	  end
+
 		configure :development do
 			require "sinatra/reloader"
 			require "pry"

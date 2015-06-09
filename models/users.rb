@@ -1,5 +1,3 @@
-require_relative "../db/connection"
-
 class User
 	def initialize(params={})
 		@id = params["id"]

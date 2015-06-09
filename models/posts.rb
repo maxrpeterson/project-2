@@ -1,5 +1,3 @@
-require_relative "../db/connection"
-
 class Post
 	def initialize(params={})
 		@id = params["id"]
