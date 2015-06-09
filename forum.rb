@@ -16,12 +16,13 @@ module Forum
 	  configure :production do
 	  	require 'uri'
 			uri = URI.parse ENV["DATABASE_URL"]
-			$db = PG connect dbname: uri.path[1..-1], host: uri.host, port: uri.port, user: uri.user, password: uri.password
+			$db = PG.connect dbname: uri.path[1..-1], host: uri.host, port: uri.port, user: uri.user, password: uri.password
 	  end
 
 		configure :development do
 			require "sinatra/reloader"
 			require "pry"
+			$db = PG.connect(dbname: "project_forum")
 			register Sinatra::Reloader
 	    set :bind, '0.0.0.0'
 		end
