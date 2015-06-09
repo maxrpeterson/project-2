@@ -36,7 +36,7 @@
 	<% if @user_name %>
 	<form method="POST" action="/posts/<%= @post.id %>/comments">
 		<input type="Text" name="body" placeholder="Write a comment..." required>
-		<button type="submit" value="Comment">Comment</button>
+		<input type="submit" value="Comment">
 	</form>
 	<% end %>
 </div>

@@ -37,7 +37,7 @@ header h1 {
 div.register div {
 	width: 12em;
 }
-#user-actions input[type="text"], #user-actions input[type="password"] {
+#user-actions input[type="text"], #user-actions input[type="password"], #user-actions input[type="email"] {
 	font-size: 12px;
 	height: 2em;
 	width: 14em;
@@ -50,12 +50,6 @@ header h5 {
 	margin: 0.5em 0 0 0;
 	padding: 0.4em;
 }
-header h5, .log-out input {
-	cursor: pointer;	
-}
-.log-out input:hover {
-	text-decoration: underline;
-}
 .active {
 	background: #ffffff;
 }
@@ -65,12 +59,6 @@ header h5, .log-out input {
 #log-reg > div {
 	width: 100%;
 	height: 4em;
-}
-#log-reg input[type="submit"] {
-	margin-top: 0.5em;
-	background: #ffffff;
-	border: 1px solid #d0d0d0;
-	border-radius: 2px;
 }
 a {
 	text-decoration: none;
@@ -82,6 +70,27 @@ a:hover {
 blockquote {
 	background: rgba(255,255,255,0.7);
 	padding: 0.5em;
+}
+input[type="submit"], #new-post-button {
+	border-radius: 2px;
+	border: none;
+	background: #ffffff;
+	padding: 0.6em;
+	font-size: 12px;
+}
+input[type="submit"]:hover {
+	background: #f0f0f0;
+}
+.new-post input[type="submit"], #new-post-button {
+	text-align: center;
+	display: block;
+	margin: 0 auto;
+	max-width: 8em;
+	font-size: 16px;
+}
+#log-reg input[type="submit"] {
+	border: 1px solid #d0d0d0;
+	margin-top: 0.5em;
 }
 .right {
 	float: right;
@@ -104,18 +113,11 @@ blockquote {
 .container div {
 	margin: 1em 0 1.5em 0;
 }
-#new-post-button, .log-out input {
-	padding: 0.6em;
-	margin: 0.8em 0;
-	font-size: 14px;
-	background: #ffffff;
-	border: none;
-	border-radius: 0.2px;
+#new-post-button:hover, header h5:hover {
+	cursor: pointer;
 }
 #new-post-button:hover {
 	background: #f0f0f0;
-	cursor: pointer;
-	text-decoration: underline;
 }
 ul.post-list {
 	padding: 0;
@@ -146,19 +148,13 @@ ul.post-list {
 .post p {
 	font-size: 16px;
 }
-.new-post input {
+.new-post input[type="text"] {
 	display: block;
 	font-size: 16px;
 	margin: 0 auto;
 	padding: 1em;
 	background: #ffffff;
-}
-.new-post input[type="text"] {
 	width: 95%;
-}
-.new-post input[type="submit"] {
-	border-radius: 2px;
-	border: none;
 }
 .new-post textarea {
 	width: 95%;
@@ -169,16 +165,7 @@ ul.post-list {
 	padding: 1em;
 	height: 23em;
 }
-#like {
-	border: none;
-	border-radius: 2px;
-	background: #ffffff;
-	padding: 0.5em;
-}
-#like:hover {
-	text-decoration: underline;
-}
-.comments input, .comments button {
+.comments input {
 	display: inline-block;
 	margin: 1em;
 	font-size: 12px;

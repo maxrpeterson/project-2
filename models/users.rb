@@ -11,7 +11,8 @@ class User
 		@created = Time.parse(params["created"]) unless params["created"].nil?
 	end
 
-	attr_reader :id, :fname, :lname, :gender, :email
+	attr_reader :id, :email
+	attr_accessor :fname, :lname, :gender
 	attr_writer :password
 
 	def self.find_by_id(id)
@@ -23,16 +24,23 @@ class User
 		user = self.find_by_email(email)
 		if !user.nil? && user.password_correct?(password)
 			user
+		elsif user.nil?
+			"User for email address provided doesn't exist"
+		elsif !user.password_correct?(password)
+			"Incorrect password"
 		else
-			nil
+			"Unexpected error"
 		end
 	end
 
 	def valid?
 		if @fname && @email && @password
-			@fname.capitalize!
 			@email.delete!(" ")
-			if @email.include?("@")
+			@fname.capitalize!
+			duplicate = User.find_by_email(@email)
+			if duplicate
+				"duplicate"
+			elsif @email.include?("@")
 				true
 			else
 				"no@"
@@ -44,7 +52,7 @@ class User
 
 	def self.find_by_email(email)
 		result = $db.exec_params("SELECT * FROM users WHERE email=$1", [email]).first
-		User.new(result)
+		User.new(result) unless result.nil?
 	end
 
 	def full_name
@@ -65,7 +73,7 @@ class User
 	end
 
 	def update
-		$db.exec_params("UPDATE users SET fname=$1, lname=$2, gender=$3, email=$4 WHERE id=$5", [@fname, @lname, @email, @gender, @id])
+		$db.exec_params("UPDATE users SET fname=$1, lname=$2, gender=$3, email=$4 WHERE id=$5", [@fname, @lname, @gender, @email, @id])
 	end
 
 	def timestamp

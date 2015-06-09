@@ -1,4 +1,7 @@
 <div class="user info">
+	<% if @user_id && @user.id == @user_id %>
+	<a class="right" href="/users/edit">Edit your profile</a>
+	<% end %>
 	<h1><%= @user.full_name %></h1>
 	<h5><%= @user.timestamp %></h5>
 </div>

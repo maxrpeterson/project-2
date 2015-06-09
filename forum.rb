@@ -32,13 +32,13 @@ module Forum
 
 		# sign in/sign up
 		post '/users/login' do
-			user = User.login(params[:email], params[:password])
-			if user.nil?
-				@message = "Incorrect username or password"
+			result = User.login(params[:email], params[:password])
+			if result.class == String
+				@message = result
 				erb :error
 			else
-				session[:user_id] = user.id
-				session[:user_name] = user.full_name
+				session[:user_id] = result.id
+				session[:user_name] = result.full_name
 				redirect back
 			end
 		end
@@ -49,6 +49,29 @@ module Forum
 		end
 
 		# USERS
+		# edit user profile
+		get '/users/edit' do
+			@user = User.find_by_id(session[:user_id])
+			erb :edit_user
+		end
+
+		patch '/users' do
+			@user = User.find_by_id(session[:user_id])
+			if @user.password_correct?(params[:password]) && @user.fname
+				@user.fname = params[:fname]
+				@user.lname = params[:lname]
+				@user.gender = params[:gender]
+				@user.update
+				redirect "/users/#{@user.id}"
+			elsif @user.fname.nil?
+				@message = "Please fill out a first name"
+				erb :error
+			else
+				@message = "Incorrect password"
+				erb :error
+			end
+		end
+
 		get '/users/:id' do
 			@user = User.find_by_id(params[:id])
 			@posts = Post.find_by_user_id(params[:id])
@@ -60,6 +83,9 @@ module Forum
 			@user = User.new(params)
 			if @user.valid? == "no@"
 				@message = "Email address entered didn't have an \"@\" sign, please try again"
+				erb :error
+			elsif @user.valid? == "duplicate"
+				@message = "Email address has already been registered, please try again"
 				erb :error
 			elsif @user.valid?
 				@user.save_new

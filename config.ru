@@ -1,4 +1,4 @@
-require_relative "forum.rb"
+require_relative "./forum.rb"
 
 use Rack::MethodOverride
 

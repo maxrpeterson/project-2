@@ -1,0 +1,14 @@
+<form method="POST" action="/users">
+	<input type="hidden" name="_method" value="PATCH">
+	<input type="text" name="password" placeholder="Re-enter your password" required>
+	<input type="text" name="fname" placeholder="Enter your first name" value="<%= @user.fname %>" required>
+	<input type="text" name="lname" placeholder="Enter your last name" value="<%= @user.lname %>">
+	<label for="gender-selector">Gender</label>
+	<select id="gender-selector" name="gender">
+		<option selected>-</option>
+		<option value="female">Female</option>
+		<option value="male">Male</option>
+		<option value="other">Other</option>
+	</select>
+	<input type="submit" value="Update">
+</form>
