@@ -1,6 +1,10 @@
-DROP DATABASE IF EXISTS project_forum;
-CREATE DATABASE project_forum;
-\c project_forum
+-- DROP DATABASE IF EXISTS project_forum;
+-- CREATE DATABASE project_forum;
+-- \c project_forum
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS posts CASCADE;
+DROP TABLE IF EXISTS comments CASCADE;
+DROP TABLE IF EXISTS likes CASCADE;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
