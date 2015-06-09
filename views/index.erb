@@ -1,7 +1,7 @@
 <% if @user_name %>
 <a href="/posts/new" id="new-post-button">New Post...</a>
 <% end %>
-<% if @posts.empty %>
+<% if @posts.empty? %>
 <h3> No posts yet...</h3>
 <% else %>
 <ul class="post-list">
