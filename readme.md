@@ -23,5 +23,5 @@ To get the IP info, I used the REST-client ruby gem.
 To enable markdown syntax usage in posts, I used the RedCarpet ruby gem.
 
 -----------
-## To download & run
-Just fork the repo, run `bundle install` in the root folder, and then `bundle exec rackup`. type `localhost:9292` into your browser's url bar.
+## To see it live...
+check it out [here](https://max-peterson-project-2.herokuapp.com/)
